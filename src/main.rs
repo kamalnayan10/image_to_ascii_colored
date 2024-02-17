@@ -6,16 +6,14 @@ use crossterm::terminal;
 fn get_ascii(color_avg:u8) -> &'static str{
     let idx = color_avg/52;
 
-    let ascii_char = ["." , "," , ":" , "%" , "@"];
+    let ascii_char = ["." , "#" , "%" , "$" , "@"];
 
     return ascii_char[idx as usize]
 }
 
-fn main() {
-
+fn image_to_ascii(path:&str){
     let (term_w , term_h) = terminal::size().unwrap();
     
-    let path = "logo.png";
     let img = image::open(path).unwrap();
 
     let resized_img = img.resize((term_w) as u32, (term_h) as u32,image::imageops::FilterType::Nearest);
@@ -35,10 +33,13 @@ fn main() {
             let ascii = get_ascii(color_avg);
 
             
-            print!("{:^3}" , ascii.truecolor(pixels[0],pixels[1],pixels[2]));
+            print!("{:^2}" , ascii.truecolor(pixels[0],pixels[1],pixels[2]));
         }
         println!("");
     }
-    
+}
 
+fn main() {
+    let path = "C:/Users/kamal/Downloads/kitten.png";
+    image_to_ascii(path);
 }

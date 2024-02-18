@@ -1,7 +1,7 @@
-use image::{GenericImageView, Rgba};
+use image::GenericImageView;
 use colored::Colorize;
-use std::cmp;
 use crossterm::terminal;
+use std::env;
 
 fn get_ascii(color_avg:u8) -> &'static str{
     let idx = color_avg/52;
@@ -40,6 +40,11 @@ fn image_to_ascii(path:&str){
 }
 
 fn main() {
-    let path = "C:/Users/kamal/Downloads/kitten.png";
-    image_to_ascii(path);
+    let mut arg = env::args();
+    let path = match arg.nth(1){
+        Some(file) => file,
+        None => String::from("logo.png"),
+    };
+
+    image_to_ascii(&path);
 }
